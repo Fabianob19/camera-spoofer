@@ -1,4 +1,6 @@
-# 📷 Camera Spoofer
+<p align="center">
+  <img src="assets/banner.png" alt="Camera Spoofer Banner" width="100%">
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white" alt="Python">
@@ -40,7 +42,7 @@ A interface permite selecionar qualquer câmera detectada e escolher um novo nom
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/camera-spoofer.git
+git clone https://github.com/Fabianob19/camera-spoofer.git
 cd camera-spoofer
 
 # Instale as dependências
@@ -98,7 +100,7 @@ O executável será criado em `dist/Camera Spoofer.exe`.
 
 > **Reinicie os Aplicativos**: Após renomear, feche e reabra os programas que usam a câmera para que a mudança tenha efeito.
 
-## � Como Funciona
+## 🔒 Como Funciona
 
 1. **Detecção**: Usa DirectShow (COM) e o Registro do Windows para listar todas as câmeras
 2. **Identificação**: Compara nomes com padrões conhecidos de câmeras virtuais
@@ -130,9 +132,3 @@ Contribuições são bem-vindas! Sinta-se à vontade para:
 ## 📄 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
-<p align="center">
-  Feito com ❤️ para a comunidade
-</p>
