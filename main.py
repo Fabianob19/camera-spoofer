@@ -153,7 +153,7 @@ class CameraSpoofApp(ctk.CTk):
         
         new_name_label = ctk.CTkLabel(
             new_name_frame,
-            text="Novo nome (câmera real):",
+            text="Novo nome (escolha da lista ou digite personalizado):",
             font=ctk.CTkFont(size=13),
             text_color="#aaaaaa"
         )
@@ -175,6 +175,32 @@ class CameraSpoofApp(ctk.CTk):
             dropdown_hover_color=self.colors['accent']
         )
         self.real_camera_combo.pack(fill="x", pady=(5, 0))
+        
+        # Checkbox para usar nome personalizado
+        self.use_custom_var = ctk.BooleanVar(value=False)
+        self.custom_check = ctk.CTkCheckBox(
+            new_name_frame,
+            text="Usar nome personalizado",
+            variable=self.use_custom_var,
+            command=self._toggle_custom_name,
+            font=ctk.CTkFont(size=12),
+            fg_color=self.colors['success'],
+            hover_color="#00a050"
+        )
+        self.custom_check.pack(anchor="w", pady=(10, 5))
+        
+        # Campo de entrada para nome personalizado
+        self.custom_name_var = ctk.StringVar(value="")
+        self.custom_name_entry = ctk.CTkEntry(
+            new_name_frame,
+            textvariable=self.custom_name_var,
+            placeholder_text="Digite o nome desejado...",
+            height=35,
+            fg_color=self.colors['accent'],
+            border_color=self.colors['accent'],
+            state="disabled"
+        )
+        self.custom_name_entry.pack(fill="x", pady=(0, 5))
         
         # Botões de ação
         buttons_frame = ctk.CTkFrame(rename_frame, fg_color="transparent")
@@ -267,10 +293,8 @@ class CameraSpoofApp(ctk.CTk):
         for i, camera in enumerate(self.cameras):
             self._create_camera_item(camera, i)
         
-        # Verifica backups
-        backed_up = get_backed_up_cameras()
-        if backed_up:
-            self.restore_btn.configure(state="normal")
+        # Verifica backups e habilita botão de restaurar
+        self._check_and_enable_restore()
         
         self._update_status(f"✅ {len(self.cameras)} câmeras encontradas - Clique em 'Selecionar' para renomear", "success")
     
@@ -321,10 +345,17 @@ class CameraSpoofApp(ctk.CTk):
             messagebox.showwarning("Aviso", "Selecione uma câmera primeiro!")
             return
         
-        new_name = self.real_camera_var.get()
-        if not new_name:
-            messagebox.showwarning("Aviso", "Escolha um nome de câmera real!")
-            return
+        # Obtém o nome (personalizado ou da lista)
+        if self.use_custom_var.get():
+            new_name = self.custom_name_var.get().strip()
+            if not new_name:
+                messagebox.showwarning("Aviso", "Digite um nome personalizado!")
+                return
+        else:
+            new_name = self.real_camera_var.get()
+            if not new_name:
+                messagebox.showwarning("Aviso", "Escolha um nome de câmera!")
+                return
         
         old_name = self.selected_camera['name']
         
@@ -415,6 +446,23 @@ class CameraSpoofApp(ctk.CTk):
             "error": self.colors['danger']
         }
         self.status_label.configure(text=message, text_color=colors.get(status_type, "#888888"))
+    
+    def _toggle_custom_name(self):
+        """Alterna entre modo preset e modo personalizado."""
+        if self.use_custom_var.get():
+            self.custom_name_entry.configure(state="normal")
+            self.real_camera_combo.configure(state="disabled")
+        else:
+            self.custom_name_entry.configure(state="disabled")
+            self.real_camera_combo.configure(state="normal")
+    
+    def _check_and_enable_restore(self):
+        """Verifica se existem backups e habilita o botão de restaurar."""
+        backed_up = get_backed_up_cameras()
+        if backed_up:
+            self.restore_btn.configure(state="normal")
+        else:
+            self.restore_btn.configure(state="disabled")
 
 
 def main():
