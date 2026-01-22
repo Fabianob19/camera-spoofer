@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
 </p>
 
-**Camera Spoofer** é uma ferramenta para Windows que permite renomear câmeras virtuais (como OBS Virtual Camera, ManyCam, NDI, etc.) para nomes de webcams físicas reais (Logitech, Microsoft, Dell, etc.).
+**Camera Spoofer** é uma ferramenta para Windows que permite renomear suas câmeras de forma fácil e rápida. Ideal para organização, privacidade ou personalização do nome exibido pelos dispositivos de vídeo.
 
 ## ✨ Funcionalidades
 

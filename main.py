@@ -36,24 +36,29 @@ class CameraSpoofApp(ctk.CTk):
         
         # Configuração da janela
         self.title("📷 Camera Spoofer")
-        self.geometry("750x800")
-        self.minsize(700, 700)
+        self.geometry("780x920")
+        self.minsize(750, 850)
         
         # Dados
         self.cameras = []
         self.selected_camera = None
         
-        # Cores
+        # Paleta de cores premium (roxo/ciano gradiente)
         self.colors = {
-            'bg': '#1a1a2e',
-            'card': '#16213e',
-            'accent': '#0f3460',
-            'success': '#00bf63',
-            'warning': '#ffcc00',
-            'danger': '#ff3b3b',
-            'text': '#eaeaea',
-            'virtual': '#e94560',
-            'real': '#00bf63',
+            'bg': '#0f0f1a',           # Fundo muito escuro
+            'card': '#1a1a2e',          # Cards
+            'card_hover': '#252542',    # Card hover
+            'accent': '#6366f1',        # Roxo vibrante (indigo)
+            'accent_light': '#818cf8',  # Roxo claro
+            'success': '#10b981',       # Verde esmeralda
+            'success_hover': '#059669', # Verde escuro
+            'warning': '#f59e0b',       # Âmbar
+            'danger': '#ef4444',        # Vermelho
+            'text': '#f8fafc',          # Texto branco
+            'text_muted': '#94a3b8',    # Texto cinza
+            'border': '#334155',        # Bordas
+            'gradient_start': '#6366f1', # Roxo
+            'gradient_end': '#06b6d4',   # Ciano
         }
         
         self.configure(fg_color=self.colors['bg'])
@@ -71,93 +76,104 @@ class CameraSpoofApp(ctk.CTk):
         main_frame = ctk.CTkFrame(self, fg_color="transparent")
         main_frame.pack(fill="both", expand=True, padx=20, pady=20)
         
-        # Título
-        title_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=15)
-        title_frame.pack(fill="x", pady=(0, 15))
+        # Header com visual premium
+        title_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=20, border_width=1, border_color=self.colors['border'])
+        title_frame.pack(fill="x", pady=(0, 12))
         
+        # Container interno do header
+        header_inner = ctk.CTkFrame(title_frame, fg_color="transparent")
+        header_inner.pack(fill="x", padx=20, pady=15)
+        
+        # Título principal com estilo
         title_label = ctk.CTkLabel(
-            title_frame,
-            text="📷 Camera Spoofer",
-            font=ctk.CTkFont(size=28, weight="bold"),
+            header_inner,
+            text="🎭 Camera Spoofer",
+            font=ctk.CTkFont(family="Segoe UI", size=32, weight="bold"),
             text_color=self.colors['text']
         )
-        title_label.pack(pady=15)
+        title_label.pack()
+        
+        # Linha decorativa (simula gradiente)
+        accent_line = ctk.CTkFrame(header_inner, fg_color=self.colors['accent'], height=3, corner_radius=2)
+        accent_line.pack(fill="x", pady=(8, 8), padx=100)
         
         subtitle = ctk.CTkLabel(
-            title_frame,
-            text="Renomeie câmeras virtuais para evitar bloqueios",
+            header_inner,
+            text="Gerencie os nomes das suas câmeras com facilidade",
             font=ctk.CTkFont(size=13),
-            text_color="#888888"
+            text_color=self.colors['text_muted']
         )
-        subtitle.pack(pady=(0, 15))
+        subtitle.pack()
         
         # Status de admin
         admin_status = "✅ Administrador" if is_admin() else "⚠️ Sem privilégios de Admin"
         admin_color = self.colors['success'] if is_admin() else self.colors['warning']
         
         self.admin_label = ctk.CTkLabel(
-            title_frame,
+            header_inner,
             text=admin_status,
-            font=ctk.CTkFont(size=11),
+            font=ctk.CTkFont(size=12),
             text_color=admin_color
         )
-        self.admin_label.pack(pady=(0, 10))
+        self.admin_label.pack(pady=(8, 0))
         
         # Seção de câmeras detectadas
-        cameras_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=15)
-        cameras_frame.pack(fill="both", expand=True, pady=(0, 15))
+        cameras_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=16, border_width=1, border_color=self.colors['border'])
+        cameras_frame.pack(fill="both", expand=True, pady=(0, 12))
         
         cameras_label = ctk.CTkLabel(
             cameras_frame,
-            text="📹 Câmeras Detectadas",
-            font=ctk.CTkFont(size=16, weight="bold"),
+            text="Câmeras Detectadas",
+            font=ctk.CTkFont(size=15, weight="bold"),
             text_color=self.colors['text']
         )
-        cameras_label.pack(pady=(15, 10), padx=15, anchor="w")
+        cameras_label.pack(pady=(12, 8), padx=15, anchor="w")
         
-        # Lista de câmeras
+        # Lista de câmeras com visual melhorado
         self.cameras_listbox = ctk.CTkScrollableFrame(
             cameras_frame,
-            height=150,
-            fg_color=self.colors['accent'],
-            corner_radius=10
+            height=160,
+            fg_color=self.colors['bg'],
+            corner_radius=12
         )
-        self.cameras_listbox.pack(fill="both", expand=True, padx=15, pady=(0, 15))
+        self.cameras_listbox.pack(fill="both", expand=True, padx=12, pady=(0, 8))
         
-        # Botão de atualizar
+        # Botão de atualizar com estilo
         refresh_btn = ctk.CTkButton(
             cameras_frame,
-            text="🔄 Atualizar Lista",
+            text="↻  Atualizar Lista",
             command=self._load_cameras_async,
             fg_color=self.colors['accent'],
-            hover_color="#1a4a7a",
-            height=35
+            hover_color=self.colors['accent_light'],
+            height=32,
+            corner_radius=8,
+            font=ctk.CTkFont(size=12)
         )
-        refresh_btn.pack(pady=(0, 15))
+        refresh_btn.pack(pady=(0, 10))
         
         # Seção de renomeação
-        rename_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=15)
-        rename_frame.pack(fill="x", pady=(0, 15))
+        rename_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=16, border_width=1, border_color=self.colors['border'])
+        rename_frame.pack(fill="x", pady=(0, 12))
         
         rename_label = ctk.CTkLabel(
             rename_frame,
-            text="🔄 Renomear Câmera",
-            font=ctk.CTkFont(size=16, weight="bold"),
+            text="📝  Renomear Câmera",
+            font=ctk.CTkFont(size=15, weight="bold"),
             text_color=self.colors['text']
         )
-        rename_label.pack(pady=(15, 10), padx=15, anchor="w")
+        rename_label.pack(pady=(12, 8), padx=15, anchor="w")
         
         # Dropdown para novo nome
         new_name_frame = ctk.CTkFrame(rename_frame, fg_color="transparent")
-        new_name_frame.pack(fill="x", padx=15, pady=(0, 10))
+        new_name_frame.pack(fill="x", padx=15, pady=(0, 8))
         
         new_name_label = ctk.CTkLabel(
             new_name_frame,
-            text="Novo nome (escolha da lista ou digite personalizado):",
-            font=ctk.CTkFont(size=13),
-            text_color="#aaaaaa"
+            text="Selecione um nome de câmera real:",
+            font=ctk.CTkFont(size=12, weight="bold"),
+            text_color=self.colors['text_muted']
         )
-        new_name_label.pack(anchor="w")
+        new_name_label.pack(anchor="w", pady=(0, 4))
         
         # Combobox com nomes de câmeras reais
         self.real_camera_var = ctk.StringVar(value=get_suggested_name())
@@ -166,41 +182,54 @@ class CameraSpoofApp(ctk.CTk):
             values=get_all_real_camera_names(),
             variable=self.real_camera_var,
             width=400,
-            height=35,
-            fg_color=self.colors['accent'],
-            border_color=self.colors['accent'],
+            height=38,
+            corner_radius=10,
+            fg_color=self.colors['bg'],
+            border_color=self.colors['border'],
             button_color=self.colors['accent'],
-            button_hover_color="#1a4a7a",
+            button_hover_color=self.colors['accent_light'],
             dropdown_fg_color=self.colors['card'],
-            dropdown_hover_color=self.colors['accent']
+            dropdown_hover_color=self.colors['accent'],
+            font=ctk.CTkFont(size=13)
         )
-        self.real_camera_combo.pack(fill="x", pady=(5, 0))
+        self.real_camera_combo.pack(fill="x", pady=(0, 10))
+        
+        # Card para opção de nome personalizado
+        custom_card = ctk.CTkFrame(new_name_frame, fg_color=self.colors['bg'], corner_radius=10)
+        custom_card.pack(fill="x", pady=(0, 5))
+        
+        custom_inner = ctk.CTkFrame(custom_card, fg_color="transparent")
+        custom_inner.pack(fill="x", padx=12, pady=10)
         
         # Checkbox para usar nome personalizado
         self.use_custom_var = ctk.BooleanVar(value=False)
         self.custom_check = ctk.CTkCheckBox(
-            new_name_frame,
-            text="Usar nome personalizado",
+            custom_inner,
+            text="  Usar nome personalizado",
             variable=self.use_custom_var,
             command=self._toggle_custom_name,
             font=ctk.CTkFont(size=12),
-            fg_color=self.colors['success'],
-            hover_color="#00a050"
+            fg_color=self.colors['accent'],
+            hover_color=self.colors['accent_light'],
+            border_color=self.colors['border'],
+            checkmark_color=self.colors['text']
         )
-        self.custom_check.pack(anchor="w", pady=(10, 5))
+        self.custom_check.pack(anchor="w", pady=(0, 8))
         
         # Campo de entrada para nome personalizado
         self.custom_name_var = ctk.StringVar(value="")
         self.custom_name_entry = ctk.CTkEntry(
-            new_name_frame,
+            custom_inner,
             textvariable=self.custom_name_var,
-            placeholder_text="Digite o nome desejado...",
-            height=35,
-            fg_color=self.colors['accent'],
-            border_color=self.colors['accent'],
+            placeholder_text="Digite qualquer nome aqui...",
+            height=38,
+            corner_radius=10,
+            fg_color=self.colors['card'],
+            border_color=self.colors['border'],
+            font=ctk.CTkFont(size=13),
             state="disabled"
         )
-        self.custom_name_entry.pack(fill="x", pady=(0, 5))
+        self.custom_name_entry.pack(fill="x")
         
         # Botões de ação
         buttons_frame = ctk.CTkFrame(rename_frame, fg_color="transparent")
@@ -208,40 +237,44 @@ class CameraSpoofApp(ctk.CTk):
         
         self.rename_btn = ctk.CTkButton(
             buttons_frame,
-            text="✏️ Renomear Selecionada",
+            text="✔  Renomear Selecionada",
             command=self._rename_camera,
             fg_color=self.colors['success'],
-            hover_color="#00a050",
-            height=40,
-            font=ctk.CTkFont(size=14, weight="bold"),
+            hover_color=self.colors['success_hover'],
+            height=42,
+            corner_radius=10,
+            font=ctk.CTkFont(size=13, weight="bold"),
             state="disabled"
         )
-        self.rename_btn.pack(side="left", expand=True, fill="x", padx=(0, 5))
+        self.rename_btn.pack(side="left", expand=True, fill="x", padx=(0, 6))
         
         self.restore_btn = ctk.CTkButton(
             buttons_frame,
-            text="↩️ Restaurar Original",
+            text="↩  Restaurar Original",
             command=self._restore_camera,
-            fg_color=self.colors['warning'],
-            hover_color="#e6b800",
-            text_color="#1a1a2e",
-            height=40,
-            font=ctk.CTkFont(size=14, weight="bold"),
+            fg_color="transparent",
+            hover_color=self.colors['card_hover'],
+            border_width=2,
+            border_color=self.colors['accent'],
+            text_color=self.colors['accent_light'],
+            height=42,
+            corner_radius=10,
+            font=ctk.CTkFont(size=13, weight="bold"),
             state="disabled"
         )
-        self.restore_btn.pack(side="left", expand=True, fill="x", padx=(5, 0))
+        self.restore_btn.pack(side="left", expand=True, fill="x", padx=(6, 0))
         
         # Status bar
-        self.status_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=10)
+        self.status_frame = ctk.CTkFrame(main_frame, fg_color=self.colors['card'], corner_radius=12, border_width=1, border_color=self.colors['border'])
         self.status_frame.pack(fill="x")
         
         self.status_label = ctk.CTkLabel(
             self.status_frame,
-            text="💡 Selecione uma câmera virtual para renomear",
+            text="💡 Selecione uma câmera para renomear",
             font=ctk.CTkFont(size=12),
-            text_color="#888888"
+            text_color=self.colors['text_muted']
         )
-        self.status_label.pack(pady=10)
+        self.status_label.pack(pady=8)
     
     def _load_cameras_async(self):
         """Carrega câmeras em thread separada."""
@@ -303,35 +336,38 @@ class CameraSpoofApp(ctk.CTk):
         item_frame = ctk.CTkFrame(
             self.cameras_listbox,
             fg_color=self.colors['card'],
-            corner_radius=8
+            corner_radius=10,
+            border_width=1,
+            border_color=self.colors['border']
         )
-        item_frame.pack(fill="x", pady=3)
+        item_frame.pack(fill="x", pady=4, padx=2)
         
         # Frame interno
         inner_frame = ctk.CTkFrame(item_frame, fg_color="transparent")
-        inner_frame.pack(fill="x", padx=10, pady=8)
+        inner_frame.pack(fill="x", padx=12, pady=10)
         
         # Nome da câmera
         name_label = ctk.CTkLabel(
             inner_frame,
-            text=f"📹 {camera['name']}",
+            text=camera['name'],
             font=ctk.CTkFont(size=13, weight="bold"),
             text_color=self.colors['text']
         )
         name_label.pack(side="left")
         
-        # Botão de selecionar
+        # Botão de selecionar com estilo premium
         select_btn = ctk.CTkButton(
             inner_frame,
             text="Selecionar",
-            width=90,
-            height=30,
-            fg_color=self.colors['success'],
-            hover_color="#00a050",
+            width=100,
+            height=32,
+            fg_color=self.colors['accent'],
+            hover_color=self.colors['accent_light'],
+            corner_radius=8,
             font=ctk.CTkFont(size=12, weight="bold"),
             command=lambda c=camera: self._select_camera(c)
         )
-        select_btn.pack(side="right", padx=5)
+        select_btn.pack(side="right")
     
     def _select_camera(self, camera: dict):
         """Seleciona uma câmera para renomeação."""

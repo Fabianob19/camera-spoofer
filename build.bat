@@ -31,6 +31,7 @@ REM Gera o executável
 pyinstaller --onefile ^
     --windowed ^
     --name "Camera Spoofer" ^
+    --icon "assets\icon.ico" ^
     --add-data "real_cameras.py;." ^
     --hidden-import wmi ^
     --hidden-import win32com ^

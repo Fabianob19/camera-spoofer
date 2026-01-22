@@ -76,62 +76,37 @@ VIRTUAL_CAMERA_PATTERNS = [
     "capture card",
 ]
 
-# Nomes de câmeras reais para substituição (organizados por popularidade)
+# Nomes de câmeras reais para substituição (apenas as mais populares)
 REAL_CAMERA_NAMES = {
     "Logitech": [
         "Logitech HD Webcam C920",
         "Logitech HD Pro Webcam C922",
         "Logitech BRIO 4K Ultra HD Webcam",
-        "Logitech MX Brio",
-        "Logitech Brio 500",
-        "Logitech C920s HD Pro Webcam",
-        "Logitech Brio 300",
-        "Logitech HD Webcam C930e",
-        "Logitech C270 HD Webcam",
         "Logitech StreamCam",
     ],
     "Microsoft": [
         "Microsoft LifeCam HD-3000",
         "Microsoft LifeCam Studio",
         "Microsoft Modern Webcam",
-        "Microsoft LifeCam Cinema",
-        "Microsoft LifeCam HD-5000",
     ],
     "Dell": [
         "Dell UltraSharp Webcam",
         "Dell Pro Webcam WB5023",
-        "Dell Integrated Webcam",
-        "Dell WB7022 4K Webcam",
     ],
     "HP": [
         "HP TrueVision HD Camera",
         "HP 960 4K Streaming Webcam",
-        "HP Wide Vision HD Camera",
-        "HP 325 FHD Webcam",
-        "HP HD Camera",
     ],
     "Lenovo": [
         "Lenovo Integrated Camera",
         "Lenovo 500 FHD Webcam",
-        "Lenovo Essential FHD Webcam",
-        "Lenovo ThinkShutter Camera",
     ],
-    "Outras Marcas": [
-        "Anker PowerConf C200",
+    "Outras": [
         "Razer Kiyo",
-        "Razer Kiyo Pro",
         "Elgato Facecam",
-        "Elgato Facecam Pro",
         "OBSBOT Tiny 2",
         "Insta360 Link",
         "ASUS ROG Eye",
-        "AVerMedia Live Streamer CAM",
-        "Creative Live! Cam Sync",
-        "Trust Tyro Full HD Webcam",
-        "Genius WideCam F100",
-        "A4Tech PK-910H",
-        "Canyon CNE-CWC3",
-        "Papalook PA452",
     ],
 }
 
